@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "timezoned-date": "^3.0.2"
   }
 }

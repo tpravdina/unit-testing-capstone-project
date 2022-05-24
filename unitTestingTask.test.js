@@ -1,3 +1,4 @@
+const timezonedDate = require("timezoned-date");
 let unitTestingTask = require("./unitTestingTask");
 
 describe("unitTestingTask", () => {
@@ -261,15 +262,16 @@ describe("unitTestingTask", () => {
   });
 
   describe("Time-zone", () => {
+    const plusTwoTimeZoneDate = timezonedDate.makeConstructor(120);
     it("should return correct result for 'ZZ' token", () => {
       expect(
-        unitTestingTask("ZZ", new Date("February 17, 1995 03:24:54"))
+        unitTestingTask("ZZ", new plusTwoTimeZoneDate())
       ).toEqual("+0200");
     });
 
     it("should return correct result for 'Z' token", () => {
       expect(
-        unitTestingTask("Z", new Date("February 17, 1995 03:24:54"))
+        unitTestingTask("Z", new plusTwoTimeZoneDate())
       ).toEqual("+02:00");
     });
   });
