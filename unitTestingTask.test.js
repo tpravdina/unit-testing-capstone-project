@@ -3,7 +3,12 @@ let unitTestingTask = require("./unitTestingTask");
 describe("unitTestingTask", () => {
   describe("Different type of date", () => {
     it("should return today date if not date passed", () => {
+      jest.useFakeTimers("modern");
+      jest.setSystemTime(new Date(2022, 5, 24));
+
       expect(unitTestingTask("YYYY")).toEqual("2022");
+
+      jest.useRealTimers();
     });
 
     it("should return correct date if date passed as a string", () => {
@@ -13,23 +18,23 @@ describe("unitTestingTask", () => {
 
   describe("Year", () => {
     it("should return correct result for 'YYYY' token", () => {
-      expect(
-        unitTestingTask("YYYY", new Date("December 17, 1995"))
-      ).toEqual("1995");
+      expect(unitTestingTask("YYYY", new Date("December 17, 1995"))).toEqual(
+        "1995"
+      );
     });
 
     it("should return correct result for 'YY' token", () => {
-      expect(
-        unitTestingTask("YY", new Date("December 17, 1995"))
-      ).toEqual("95");
+      expect(unitTestingTask("YY", new Date("December 17, 1995"))).toEqual(
+        "95"
+      );
     });
   });
 
   describe("Month", () => {
     it("should return correct result for 'MMMM' token", () => {
-      expect(
-        unitTestingTask("MMMM", new Date("December 17, 1995"))
-      ).toEqual("December");
+      expect(unitTestingTask("MMMM", new Date("December 17, 1995"))).toEqual(
+        "December"
+      );
     });
 
     it("should return correct result for 'MMM' token", () => {
@@ -290,11 +295,8 @@ describe("unitTestingTask", () => {
 
   describe("Languages and format", () => {
     it("should return current language", () => {
-      expect(
-        unitTestingTask.lang("en")
-      ).toEqual("en");
+      expect(unitTestingTask.lang("en")).toEqual("en");
     });
-
 
     it("should return list of custom formats", () => {
       expect(unitTestingTask.formatters()).toEqual([
@@ -313,7 +315,10 @@ describe("unitTestingTask", () => {
 
     it("should return correct result for custom format", () => {
       expect(
-        unitTestingTask.register('longDate', 'd MMMM')(new Date("February 17, 1995 03:24:54"))
+        unitTestingTask.register(
+          "longDate",
+          "d MMMM"
+        )(new Date("February 17, 1995 03:24:54"))
       ).toEqual("17 February");
     });
   });
