@@ -1,4 +1,5 @@
 const timezonedDate = require("timezoned-date");
+
 let unitTestingTask = require("./unitTestingTask");
 
 describe("unitTestingTask", () => {
@@ -264,15 +265,11 @@ describe("unitTestingTask", () => {
   describe("Time-zone", () => {
     const plusTwoTimeZoneDate = timezonedDate.makeConstructor(120);
     it("should return correct result for 'ZZ' token", () => {
-      expect(
-        unitTestingTask("ZZ", new plusTwoTimeZoneDate())
-      ).toEqual("+0200");
+      expect(unitTestingTask("ZZ", new plusTwoTimeZoneDate())).toEqual("+0200");
     });
 
     it("should return correct result for 'Z' token", () => {
-      expect(
-        unitTestingTask("Z", new plusTwoTimeZoneDate())
-      ).toEqual("+02:00");
+      expect(unitTestingTask("Z", new plusTwoTimeZoneDate())).toEqual("+02:00");
     });
   });
 
@@ -295,11 +292,7 @@ describe("unitTestingTask", () => {
     });
   });
 
-  describe("Languages and format", () => {
-    it("should return current language", () => {
-      expect(unitTestingTask.lang("en")).toEqual("en");
-    });
-
+  describe("Format", () => {
     it("should return list of custom formats", () => {
       expect(unitTestingTask.formatters()).toEqual([
         "ISODate",
@@ -322,6 +315,59 @@ describe("unitTestingTask", () => {
           "d MMMM"
         )(new Date("February 17, 1995 03:24:54"))
       ).toEqual("17 February");
+    });
+  });
+
+  describe("Language (pl)", () => {
+    beforeEach(() => {
+      unitTestingTask.lang("pl");
+    });
+
+    afterAll(() => {
+      unitTestingTask.lang("en");
+    });
+
+    it("should return correct current language after changing", () => {
+      expect(unitTestingTask.lang()).toEqual("pl");
+    });
+
+    it("should return correct month in different format", () => {
+      expect(
+        unitTestingTask("MMMM", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("luty");
+      expect(
+        unitTestingTask("MMM", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("lut");
+    });
+
+    it("should return month in correct case", () => {
+      expect(
+        unitTestingTask("dd MMMM", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("17 lutego");
+      expect(
+        unitTestingTask("dd MMM", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("17 lut");
+    });
+
+    it("should return correct day in different format", () => {
+      expect(
+        unitTestingTask("DDD", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("piątek");
+      expect(
+        unitTestingTask("DD", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("pt");
+      expect(
+        unitTestingTask("D", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("Pt");
+    });
+
+    it("should return correct meridiem", () => {
+      expect(
+        unitTestingTask("A", new Date("February 17, 1995 03:24:54"))
+      ).toEqual("rano");
+      expect(
+        unitTestingTask("A", new Date("February 17, 1995 17:24:54"))
+      ).toEqual("");
     });
   });
 });

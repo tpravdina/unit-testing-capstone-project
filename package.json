@@ -4,10 +4,11 @@
   "description": "Unit testing task",
   "type": "module",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --config=jestconfig.json"
   },
   "devDependencies": {
-    "jest": "^28.1.0"
+    "jest": "^28.1.0",
+    "jest-junit": "^13.2.0"
   },
   "dependencies": {
     "timezoned-date": "^3.0.2"
