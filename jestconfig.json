@@ -1,0 +1,11 @@
+{
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "lines": 80,
+      "function": 80
+    }
+  },
+  "reporters": ["default", "jest-junit"]
+}

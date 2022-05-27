@@ -2,7 +2,15 @@
   "name": "unitestingtask",
   "version": "0.0.1",
   "description": "Unit testing task",
-
+  "type": "module",
   "scripts": {
+    "test": "jest --config=jestconfig.json"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "jest-junit": "^13.2.0"
+  },
+  "dependencies": {
+    "timezoned-date": "^3.0.2"
   }
 }
